@@ -154,7 +154,7 @@ function ProfileForm({ className }: React.ComponentProps<"form">) {
         Accept: "application/json",
       },
       body: JSON.stringify({
-        apikey: "a28aa682-5981-47bb-a26f-57fbf6b956a0",
+        apikey: process.env.NEXT_PUBLIC_Web3form_Key,
         name: values.fullName,
         email: values.email,
         message: values.message,
@@ -162,10 +162,9 @@ function ProfileForm({ className }: React.ComponentProps<"form">) {
     });
     const result = await response.json();
     if (result.success) {
-      console.log(result);
+      console.log("Email was send successfully!");
     } else {
       console.log("Something went wrong!");
-      console.log(typeof process.env.Web3form_Key);
     }
   }
   return (
