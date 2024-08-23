@@ -154,7 +154,7 @@ function ProfileForm({ className }: React.ComponentProps<"form">) {
         Accept: "application/json",
       },
       body: JSON.stringify({
-        apikey: process.env.NEXT_PUBLIC_Web3form_Key,
+        access_key: process.env.NEXT_PUBLIC_Web3form_Key,
         name: values.fullName,
         email: values.email,
         message: values.message,
