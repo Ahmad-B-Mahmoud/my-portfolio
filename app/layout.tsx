@@ -37,14 +37,6 @@ export default function RootLayout({
             name="viewport"
             content="width=device-width, initial-scale=1.0"
           />
-          <link
-            rel="manifest"
-            href="https://progressier.app/PNRLcAdokdaYUN62p0nI/progressier.json"
-          />
-          <script
-            defer
-            src="https://progressier.app/PNRLcAdokdaYUN62p0nI/script.js"
-          ></script>
         </head>
         <body
           className={cn(
