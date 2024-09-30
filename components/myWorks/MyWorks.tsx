@@ -9,7 +9,10 @@ const MyWorks = () => {
     <section id="my-works">
       {projects.map((project) => {
         return (
-          <div className="flex flex-col overflow-hidden">
+          <div
+            className="flex flex-col overflow-hidden"
+            key={project.subTitle_en}
+          >
             <ContainerScroll
               titleComponent={
                 <>
