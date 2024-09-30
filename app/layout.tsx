@@ -37,6 +37,35 @@ export default function RootLayout({
             name="viewport"
             content="width=device-width, initial-scale=1.0"
           />
+          <link rel="manifest" href="/manifest.json" />
+          <meta name="application-name" content="Ahmad Mahmoud" />
+          <meta name="theme-color" content="#881337" />
+          <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="/icons/32x32.png"
+          />
+          <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="/icons/16x16.png"
+          />
+          <link rel="shortcut icon" href="/icons/favicon.ico" />
+          <link rel="apple-touch-icon" href="/icons/180x180.png" />
+          <meta property="og:type" content="website" />
+          <meta property="og:title" content="Ahmad Mahmoud" />
+          <meta
+            property="og:description"
+            content="Ahmad Mahmoud's Personal Web Developer Portfolio."
+          />
+          <meta property="og:site_name" content="Ahmad Mahmoud" />
+          <meta property="og:url" content="https://ahmadmahmoud.vercel.app/" />
+          <meta
+            property="og:image"
+            content="https://ahmadmahmoud.vercel.app/icons/180x180.png"
+          />
         </head>
         <body
           className={cn(
