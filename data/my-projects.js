@@ -1,10 +1,17 @@
 // My projects details
 const projects = [
   {
-    title: "Al Meerath",
-    description:
+    title_en: "Al Meerath",
+    title_ar: "الميراث",
+    subTitle_en: "My Next js Web App",
+    subTitle_ar: "تطبيق ويب باستخدام لغة الجافا سكريبت",
+    releaseDate: "2024",
+    description_en:
       "Solving inheritance issues according to Islamic law according to the Hanafi and Shafi'i schools.",
+    description_ar:
+      "حلّ مسائل المواريث حسب الشريعة الإسلامية على المذهبين الحنفي و الشافعي.",
     coverImage: "/images/projects_covers/al-meerath.png",
+    appIcon: "/images/projects_covers/al-meerath_icon.webp",
     githubLink: "https://github.com/Ahmad-B-Mahmoud/al-meerath",
     previewLink: "https://al-meerath.vercel.app/",
     techUsed: [

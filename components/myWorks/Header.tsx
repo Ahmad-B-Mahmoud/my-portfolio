@@ -2,6 +2,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { LampContainer } from "../ui/lamp";
+import * as m from "@/paraglide/messages.js";
 
 function Header() {
   return (
@@ -16,7 +17,7 @@ function Header() {
         }}
         className="mt-8 bg-gradient-to-br from-rose-50 to-rose-300 py-2 bg-clip-text text-center text-5xl font-medium tracking-tight text-transparent md:text-7xl"
       >
-        My Works
+        {m.my_works_btn()}
       </motion.h1>
     </LampContainer>
   );

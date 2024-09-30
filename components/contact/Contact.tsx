@@ -35,73 +35,57 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Send, PencilLine, ContactRound, AtSign, Loader2 } from "lucide-react";
+import { toast } from "sonner";
+import * as m from "@/paraglide/messages.js";
+import { languageTag } from "@/paraglide/runtime";
 
 const formSchema = z.object({
   fullName: z
     .string()
     .min(2, {
-      message: "Your Name must be at least 2 characters.",
+      message: m.contact_form_error_message_1(),
     })
     .max(30, {
-      message: "Your Name must not be higher than 30 characters.",
+      message: m.contact_form_error_message_2(),
     })
     .regex(/^[a-zA-Zأ-ي\s-]+$/, {
-      message: "Full name can only contain letters, spaces, and hyphens",
+      message: m.contact_form_error_message_3(),
     }),
   email: z
     .string()
-    .email({ message: "Invalid email address." })
-    .min(1, { message: "Email is required." }),
+    .email({ message: m.contact_form_error_message_4() })
+    .min(1, { message: m.contact_form_error_message_5() }),
   message: z
     .string()
     .min(10, {
-      message: "Your Message must be at least 10 characters.",
+      message: m.contact_form_error_message_6(),
     })
     .max(500, {
-      message: "Your Message must not be higher than 500 characters.",
+      message: m.contact_form_error_message_7(),
     })
-    .regex(/^[a-zA-Zأ-ي0-9\s-]+$/, {
-      message: "Message can only contain letters, spaces, numbers, and hyphens",
+    .regex(/^[a-zA-Zأ-ي0-9\s-!?\.]+$/, {
+      message: m.contact_form_error_message_8(),
     }),
 });
 
-export function Contact() {
+export function Contact({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   const [open, setOpen] = React.useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
   if (isDesktop) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
-          <Button variant="secondary">
-            <svg
-              className="w-4 h-4 me-2 text-secondary-foreground"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                fillRule="evenodd"
-                d="M4 3a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h1v2a1 1 0 0 0 1.707.707L9.414 13H15a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H4Z"
-                clipRule="evenodd"
-              />
-              <path
-                fillRule="evenodd"
-                d="M8.023 17.215c.033-.03.066-.062.098-.094L10.243 15H15a3 3 0 0 0 3-3V8h2a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-1v2a1 1 0 0 1-1.707.707L14.586 18H9a1 1 0 0 1-.977-.785Z"
-                clipRule="evenodd"
-              />
-            </svg>{" "}
-            Contact Me
-          </Button>
-        </DialogTrigger>
+        <DialogTrigger asChild>{children}</DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Contact Me</DialogTitle>
+            <DialogTitle>{m.contact_me_btn()}</DialogTitle>
             <DialogDescription>
-              Get in-touch with me!, I am happy to hear from you.
+              {m.contact_form_description()}
             </DialogDescription>
           </DialogHeader>
           <ProfileForm />
@@ -112,20 +96,18 @@ export function Contact() {
 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerTrigger asChild>
-        <Button variant="outline">Contact Me</Button>
-      </DrawerTrigger>
+      <DialogTrigger asChild>{children}</DialogTrigger>
       <DrawerContent>
-        <DrawerHeader className="text-left">
-          <DrawerTitle>Contact Me</DrawerTitle>
-          <DrawerDescription>
-            Get in-touch with me!, I am happy to hear from you.
-          </DrawerDescription>
+        <DrawerHeader
+          className={languageTag() === "en" ? "text-left" : "text-right"}
+        >
+          <DrawerTitle>{m.contact_me_btn()}</DrawerTitle>
+          <DrawerDescription>{m.contact_form_description()}</DrawerDescription>
         </DrawerHeader>
         <ProfileForm className="px-4" />
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>
-            <Button variant="outline">Cancel</Button>
+            <Button variant="outline">{m.cancel()}</Button>
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>
@@ -134,6 +116,7 @@ export function Contact() {
 }
 
 function ProfileForm({ className }: React.ComponentProps<"form">) {
+  const [isLoading, setIsLoading] = React.useState(false);
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -145,8 +128,10 @@ function ProfileForm({ className }: React.ComponentProps<"form">) {
   });
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsLoading(true);
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
+    const apiKey = process.env.NEXT_PUBLIC_Web3form_Key;
     const response = await fetch("https://api.web3forms.com/submit", {
       method: "POST",
       headers: {
@@ -154,7 +139,8 @@ function ProfileForm({ className }: React.ComponentProps<"form">) {
         Accept: "application/json",
       },
       body: JSON.stringify({
-        access_key: process.env.NEXT_PUBLIC_Web3form_Key,
+        access_key: apiKey,
+        subject: "From My Portfolio",
         name: values.fullName,
         email: values.email,
         message: values.message,
@@ -162,9 +148,15 @@ function ProfileForm({ className }: React.ComponentProps<"form">) {
     });
     const result = await response.json();
     if (result.success) {
-      console.log("Email was send successfully!");
+      toast.success(m.contact_form_toast_success_title(), {
+        description: m.contact_form_toast_success_description(),
+      });
+      setIsLoading(false);
     } else {
-      console.log("Something went wrong!");
+      toast.error(m.contact_form_toast_failed_title(), {
+        description: m.contact_form_toast_failed_description(),
+      });
+      setIsLoading(false);
     }
   }
   return (
@@ -179,12 +171,12 @@ function ProfileForm({ className }: React.ComponentProps<"form">) {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Your Email</FormLabel>
+                <FormLabel>
+                  <AtSign className="h-4 w-4 text-foreground inline-block" />{" "}
+                  {m.contact_form_your_email()}
+                </FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="The Email address that i can respond to you at."
-                    {...field}
-                  />
+                  <Input placeholder="example@example.com" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -197,9 +189,15 @@ function ProfileForm({ className }: React.ComponentProps<"form">) {
             name="fullName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Your Name</FormLabel>
+                <FormLabel>
+                  <ContactRound className="h-4 w-4 text-foreground inline-block" />{" "}
+                  {m.contact_form_your_name()}
+                </FormLabel>
                 <FormControl>
-                  <Input placeholder="What should i call you." {...field} />
+                  <Input
+                    placeholder={m.contact_form_name_placeholder()}
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -212,35 +210,25 @@ function ProfileForm({ className }: React.ComponentProps<"form">) {
             name="message"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Your Message</FormLabel>
+                <FormLabel>
+                  <PencilLine className="h-4 w-4 text-foreground inline-block" />{" "}
+                  {m.contact_form_your_message()}
+                </FormLabel>
                 <FormControl>
-                  <Textarea placeholder="..." {...field} />
+                  <Textarea placeholder="..." rows={7} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
         </div>
-        <Button type="submit">
-          Send Mail{" "}
-          <svg
-            viewBox="0 -0.5 17 17"
-            version="1.1"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlnsXlink="http://www.w3.org/1999/xlink"
-            className="ml-2 h-4 w-4 si-glyph si-glyph-paper-plane"
-          >
-            <title>924</title>
-
-            <defs></defs>
-            <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-              <path
-                d="M17,1.042 L11.436,14.954 L7.958,11.477 L8.653,13.563 L7.03,14.958 L7.03,11.563 L14.984,3.375 L6.047,9.969 L1,8.694 L17,1.042 Z"
-                fill="#fff1f2"
-                className="si-glyph-fill"
-              ></path>
-            </g>
-          </svg>
+        <Button type="submit" disabled={isLoading}>
+          {isLoading ? (
+            <Loader2 className="me-2 h-4 w-4 animate-spin" />
+          ) : (
+            <Send className="me-2 h-4 w-4 text-foreground" />
+          )}
+          {m.contact_form_send_mail()}
         </Button>
       </form>
     </Form>

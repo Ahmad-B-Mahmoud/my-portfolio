@@ -8,7 +8,7 @@ import {
   useMotionValue,
   useSpring,
 } from "framer-motion";
-import Link from "next/link";
+import { Link } from "@/lib/i18n";
 
 export const AnimatedTooltip = ({
   items,
