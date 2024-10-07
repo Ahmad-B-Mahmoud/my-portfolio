@@ -4,10 +4,10 @@ import React from "react";
 
 function page() {
   return (
-    <>
+    <div className="mb-40">
       <Header />
       <MyWorks />
-    </>
+    </div>
   );
 }
 

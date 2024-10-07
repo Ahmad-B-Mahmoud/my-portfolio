@@ -10,8 +10,13 @@ const projects = [
       "Solving inheritance issues according to Islamic law according to the Hanafi and Shafi'i schools.",
     description_ar:
       "حلّ مسائل المواريث حسب الشريعة الإسلامية على المذهبين الحنفي و الشافعي.",
-    coverImage: "/images/projects_covers/al-meerath.png",
-    appIcon: "/images/projects_covers/al-meerath_icon.webp",
+    coverImages: [
+      "/images/projects/almeerath/1.png",
+      "/images/projects/almeerath/2.png",
+      "/images/projects/almeerath/3.png",
+      "/images/projects/almeerath/4.png",
+    ],
+    appIcon: "/images/projects/almeerath/al-meerath_icon.webp",
     githubLink: "https://github.com/Ahmad-B-Mahmoud/al-meerath",
     previewLink: "https://al-meerath.vercel.app/",
     techUsed: [

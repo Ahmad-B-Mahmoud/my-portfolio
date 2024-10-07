@@ -53,7 +53,7 @@ export default function RootLayout({
             href="/icons/16x16.png"
           />
           <link rel="shortcut icon" href="/icons/favicon.ico" />
-          <link rel="apple-touch-icon" href="/icons/180x180.png" />
+          <link rel="apple-touch-icon" href="/icons/ios/180.png" />
           <meta property="og:type" content="website" />
           <meta property="og:title" content="Ahmad Mahmoud" />
           <meta
@@ -64,7 +64,7 @@ export default function RootLayout({
           <meta property="og:url" content="https://ahmadmahmoud.vercel.app/" />
           <meta
             property="og:image"
-            content="https://ahmadmahmoud.vercel.app/icons/180x180.png"
+            content="https://ahmadmahmoud.vercel.app/icons/ios/180.png"
           />
         </head>
         <body
