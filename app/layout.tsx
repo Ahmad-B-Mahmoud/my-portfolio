@@ -8,10 +8,11 @@ import { Toaster } from "@/components/ui/sonner";
 import { Navbar } from "@/components/Navbar";
 import { poppins, noto_kufi_arabic } from "./fonts";
 import DirectionProvider from "@/components/DirectionProvider";
+import * as m from "@/paraglide/messages.js";
 
 export const metadata: Metadata = {
-  title: "Ahmad Mahmoud",
-  description: "My Personal Web Developer's Portfolio.",
+  title: m.my_Name(),
+  description: m.hero_description(),
 };
 
 // This is type-safe & forces you to keep it up-to-date
@@ -44,13 +45,13 @@ export default function RootLayout({
             rel="icon"
             type="image/png"
             sizes="32x32"
-            href="/icons/32x32.png"
+            href="/icons/ios/32.png"
           />
           <link
             rel="icon"
             type="image/png"
             sizes="16x16"
-            href="/icons/16x16.png"
+            href="/icons/ios/16.png"
           />
           <link rel="shortcut icon" href="/icons/favicon.ico" />
           <link rel="apple-touch-icon" href="/icons/ios/180.png" />

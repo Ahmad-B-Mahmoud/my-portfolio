@@ -7,8 +7,9 @@ import {
   Github,
   Pause,
   Play,
+  Blocks,
 } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
@@ -43,6 +44,7 @@ type CardProps = {
       id: number;
       name: string;
       designation: string;
+      designation_ar: string;
       image: string;
       techLink: string;
     }[];
@@ -78,8 +80,15 @@ export const ProjectCard: React.FC<CardProps> = ({ project }) => {
     setIsPlaying((prev) => !prev);
   };
 
+  const fadeInPulse = {
+    initial: { opacity: 0, scale: 0.95 },
+    animate: { opacity: 1, scale: 1 },
+    exit: { opacity: 0, scale: 0.95 },
+    transition: { type: "spring", stiffness: 300, damping: 20, duration: 0.5 },
+  };
+
   return (
-    <Card className="w-full max-w-3xl mx-auto mb-7">
+    <Card className="w-full max-w-4xl mx-auto mb-7">
       <CardHeader className="flex flex-row items-center gap-4">
         <Avatar className="w-20 h-20">
           <AvatarImage src={project.appIcon} alt="Avatar" />
@@ -99,16 +108,22 @@ export const ProjectCard: React.FC<CardProps> = ({ project }) => {
         <div className="relative overflow-hidden">
           <DeviceFrame deviceType="Laptop">
             <AnimatePresence initial={false}>
-              <motion.img
+              <motion.div
                 key={currentImage}
-                src={project.coverImages[currentImage]}
-                alt={`Image ${currentImage + 1}`}
                 className="absolute top-0 left-0 w-full h-full object-cover rounded-md"
-                initial={{ opacity: 0, x: 300 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -300 }}
-                transition={{ type: "tween", duration: 0.5 }}
-              />
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                variants={fadeInPulse}
+              >
+                <Image
+                  src={project.coverImages[currentImage]}
+                  alt={`Image ${currentImage + 1}`}
+                  layout="fill"
+                  objectFit="cover"
+                  className="rounded-md"
+                />
+              </motion.div>
             </AnimatePresence>
           </DeviceFrame>
           <div className="absolute bottom-2 left-2 right-2 flex justify-between items-center">
@@ -127,7 +142,10 @@ export const ProjectCard: React.FC<CardProps> = ({ project }) => {
             </Button>
           </div>
         </div>
-        <h3 className="my-4">{m.card_Used_tech_in_Development()}</h3>
+        <h3 className="my-6 px-4">
+          <Blocks className="inline-block text-inherit" />{" "}
+          {m.card_Used_tech_in_Development()}
+        </h3>
         <div className="flex flex-col sm:flex-row gap-2 mt-4">
           {project.techUsed.map((tech) => {
             return (
@@ -146,7 +164,9 @@ export const ProjectCard: React.FC<CardProps> = ({ project }) => {
                   <div className="flex flex-col gap-1 p-1">
                     {tech.name}
                     <span className="text-muted-foreground">
-                      {tech.designation}
+                      {languageTag() === "ar"
+                        ? tech.designation_ar
+                        : tech.designation}
                     </span>
                   </div>
                 </Badge>
@@ -155,7 +175,7 @@ export const ProjectCard: React.FC<CardProps> = ({ project }) => {
           })}
         </div>
       </CardContent>
-      <CardFooter className="flex justify-between">
+      <CardFooter className="flex justify-between mt-6">
         <Button asChild className=" z-10">
           <Link href={project.previewLink}>
             <ScreenShare className="w-4 h-4 me-2 text-primary-foreground" />{" "}
