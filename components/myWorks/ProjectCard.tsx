@@ -119,16 +119,23 @@ export const ProjectCard: React.FC<CardProps> = ({ project }) => {
                 <Image
                   src={project.coverImages[currentImage]}
                   alt={`Image ${currentImage + 1}`}
-                  layout="fill"
-                  objectFit="cover"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  style={{ objectFit: "cover" }}
                   className="rounded-md"
+                  placeholder="blur"
+                  blurDataURL={project.coverImages[currentImage]}
                 />
               </motion.div>
             </AnimatePresence>
           </DeviceFrame>
           <div className="absolute bottom-2 left-2 right-2 flex justify-between items-center">
             <Button variant="outline" size="icon" onClick={prevImage}>
-              <ChevronLeft className="h-4 w-4" />
+              {languageTag() === "ar" ? (
+                <ChevronRight className="h-4 w-4" />
+              ) : (
+                <ChevronLeft className="h-4 w-4" />
+              )}
             </Button>
             <Button variant="outline" size="icon" onClick={togglePlayPause}>
               {isPlaying ? (
@@ -138,7 +145,11 @@ export const ProjectCard: React.FC<CardProps> = ({ project }) => {
               )}
             </Button>
             <Button variant="outline" size="icon" onClick={nextImage}>
-              <ChevronRight className="h-4 w-4" />
+              {languageTag() === "ar" ? (
+                <ChevronLeft className="h-4 w-4" />
+              ) : (
+                <ChevronRight className="h-4 w-4" />
+              )}
             </Button>
           </div>
         </div>

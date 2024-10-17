@@ -11,8 +11,9 @@ import DirectionProvider from "@/components/DirectionProvider";
 import * as m from "@/paraglide/messages.js";
 
 export const metadata: Metadata = {
-  title: m.my_Name(),
-  description: m.hero_description(),
+  title: "Ahmad Mahmoud",
+  description:
+    "Hello, I am a Web Developer and this is my personal Portfolio that shows my works and experiences.",
 };
 
 // This is type-safe & forces you to keep it up-to-date
