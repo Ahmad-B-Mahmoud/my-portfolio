@@ -8,7 +8,6 @@ import { Toaster } from "@/components/ui/sonner";
 import { Navbar } from "@/components/Navbar";
 import { poppins, noto_kufi_arabic } from "./fonts";
 import DirectionProvider from "@/components/DirectionProvider";
-import * as m from "@/paraglide/messages.js";
 
 export const metadata: Metadata = {
   title: "Ahmad Mahmoud",
