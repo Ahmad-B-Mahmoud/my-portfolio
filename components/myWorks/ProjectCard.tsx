@@ -130,21 +130,36 @@ export const ProjectCard: React.FC<CardProps> = ({ project }) => {
             </AnimatePresence>
           </DeviceFrame>
           <div className="absolute bottom-2 left-2 right-2 flex justify-between items-center">
-            <Button variant="outline" size="icon" onClick={prevImage}>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={prevImage}
+              aria-label="Go to previous app Cover image."
+            >
               {languageTag() === "ar" ? (
                 <ChevronRight className="h-4 w-4" />
               ) : (
                 <ChevronLeft className="h-4 w-4" />
               )}
             </Button>
-            <Button variant="outline" size="icon" onClick={togglePlayPause}>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={togglePlayPause}
+              aria-label="Pause the app cover images slider."
+            >
               {isPlaying ? (
                 <Pause className="h-4 w-4" />
               ) : (
                 <Play className="h-4 w-4" />
               )}
             </Button>
-            <Button variant="outline" size="icon" onClick={nextImage}>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={nextImage}
+              aria-label="Go to next app cover image"
+            >
               {languageTag() === "ar" ? (
                 <ChevronLeft className="h-4 w-4" />
               ) : (
@@ -187,13 +202,22 @@ export const ProjectCard: React.FC<CardProps> = ({ project }) => {
         </div>
       </CardContent>
       <CardFooter className="flex justify-between mt-6">
-        <Button asChild className=" z-10">
+        <Button
+          asChild
+          className=" z-10"
+          aria-label="Go to the live preview of the app."
+        >
           <Link href={project.previewLink}>
             <ScreenShare className="w-4 h-4 me-2 text-primary-foreground" />{" "}
             {m.card_preview_app()}
           </Link>
         </Button>
-        <Button asChild variant="secondary" className=" z-10">
+        <Button
+          asChild
+          variant="secondary"
+          className=" z-10"
+          aria-label="Go to the app's source code on Github."
+        >
           <Link href={project.githubLink}>
             <Github className="w-4 h-4 me-2 text-secondary-foreground" />{" "}
             {m.card_view_source()}

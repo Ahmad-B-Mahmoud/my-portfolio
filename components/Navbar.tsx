@@ -16,27 +16,32 @@ export function Navbar() {
       title: m.home_btn(),
       icon: <House className="h-full w-full  text-rose-500" />,
       href: "/",
+      ariaLabel: "Go to home page.",
     },
 
     {
       title: m.my_works_btn(),
       icon: <BriefcaseBusiness className="h-full w-full  text-rose-500  " />,
       href: "/my-works",
+      ariaLabel: "Go to my works page.",
     },
     {
       title: m.contact_me_btn(),
       icon: <MessagesSquare className="h-full w-full  text-rose-500  " />,
       href: "#",
+      ariaLabel: "Open the contact me form.",
     },
     {
       title: "Github",
       icon: <Github className="h-full w-full  text-rose-500  " />,
       href: "https://github.com/Ahmad-B-Mahmoud",
+      ariaLabel: "Go to my Github page.",
     },
     {
       title: m.language(),
       icon: <Languages className="h-full w-full  text-rose-500  " />,
       href: "/",
+      ariaLabel: "Change the Language.",
     },
   ];
   return (

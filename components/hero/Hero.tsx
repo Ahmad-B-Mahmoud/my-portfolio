@@ -30,7 +30,12 @@ export function Hero() {
           <span className="wave">👋🏻</span> {m.hero_description()}
         </p>
         <div className="flex flex-col sm:flex-row items-center gap-4 mt-6">
-          <Button asChild onClick={handleLoading} disabled={isLoading}>
+          <Button
+            asChild
+            onClick={handleLoading}
+            disabled={isLoading}
+            aria-label="Go to my Works button."
+          >
             <Link href="/my-works">
               {isLoading ? (
                 <Loader2 className="me-2 h-4 w-4 animate-spin" />
@@ -41,7 +46,7 @@ export function Hero() {
             </Link>
           </Button>
           <Contact>
-            <Button variant="secondary">
+            <Button variant="secondary" aria-label="Open Contact me form.">
               <MessagesSquare className="w-4 h-4 me-2 text-secondary-foreground" />{" "}
               {m.contact_me_btn()}
             </Button>

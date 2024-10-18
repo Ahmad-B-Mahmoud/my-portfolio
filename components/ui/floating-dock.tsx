@@ -17,7 +17,12 @@ export const FloatingDock = ({
   items,
   desktopClassName,
 }: {
-  items: { title: string; icon: React.ReactNode; href: string }[];
+  items: {
+    title: string;
+    icon: React.ReactNode;
+    href: string;
+    ariaLabel: string;
+  }[];
   desktopClassName?: string;
   mobileClassName?: string;
 }) => {
@@ -32,7 +37,12 @@ const FloatingDockDesktop = ({
   items,
   className,
 }: {
-  items: { title: string; icon: React.ReactNode; href: string }[];
+  items: {
+    title: string;
+    icon: React.ReactNode;
+    href: string;
+    ariaLabel: string;
+  }[];
   className?: string;
 }) => {
   let mouseX = useMotionValue(Infinity);
@@ -57,11 +67,13 @@ function IconContainer({
   title,
   icon,
   href,
+  ariaLabel,
 }: {
   mouseX: MotionValue;
   title: string;
   icon: React.ReactNode;
   href: string;
+  ariaLabel: string;
 }) {
   let ref = useRef<HTMLDivElement>(null);
 
@@ -108,7 +120,7 @@ function IconContainer({
     <>
       {title === "Contact Me" || title === "تواصل معي" ? (
         <Contact>
-          <Link href={href}>
+          <Link href={href} aria-label={ariaLabel}>
             <motion.div
               ref={ref}
               style={{ width, height }}
@@ -138,7 +150,11 @@ function IconContainer({
           </Link>
         </Contact>
       ) : title === "English" || title === "العربية" ? (
-        <Link href={href} locale={languageTag() === "en" ? "ar" : "en"}>
+        <Link
+          href={href}
+          locale={languageTag() === "en" ? "ar" : "en"}
+          aria-label={ariaLabel}
+        >
           <motion.div
             ref={ref}
             style={{ width, height }}
@@ -167,7 +183,7 @@ function IconContainer({
           </motion.div>
         </Link>
       ) : (
-        <Link href={href}>
+        <Link href={href} aria-label={ariaLabel}>
           <motion.div
             ref={ref}
             style={{ width, height }}
